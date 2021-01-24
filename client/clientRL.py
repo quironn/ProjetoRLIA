@@ -28,6 +28,7 @@ class Agent:
     def getRewards(self):
         return ast.literal_eval(self.c.execute("info", "rewards"))
     
+    #Faz a impressão das setas nas direções selecionadas
     def markArrow(self, direction, x, y):
         if direction == 0:
             self.c.execute("marrow", "north" + "," + str(y) + "," + str(x))
@@ -67,7 +68,6 @@ class Agent:
 
 # Irá proceder à atualização das pontuações na tabela de QLearning usando a formula
 # recompensa = pontosPosicaoAtras + 0.9 * (pontosPosicaoAtual)
-
     def updateQLearningTable(self, positionsArray):
         for i in range(len(positionsArray) -1, -1,-1):
             if self.rewards[positionsArray[i][0]][positionsArray[i][1]] == 0:
@@ -97,12 +97,13 @@ class Agent:
                     elif positionsArray[i][0] == (positionsArray[i+1][0] +1) :
                         self.qLearningTable[(positionsArray[i][0], positionsArray[i][1])][3] = (0.9 * self.rewards[positionsArray[i+1][0]][positionsArray[i+1][1]])
                         self.rewards[positionsArray[i][0]][positionsArray[i][1]] = (0.9 * self.rewards[positionsArray[i+1][0]][positionsArray[i+1][1]])
+    # Inicia a tabela QLearning
     def initializeTable(self):
         for x in range(self.maxCoord[0]):
             for y in range(self.maxCoord[1]):
                 self.qLearningTable[(x,y)] = [0,0,0,0]
         
-
+    # Método de enviar os valores das recompensas para a impressão das setas
     def drawArrows(self):
         list = [(0,0), (1,0), (2,0), (2,1), (3,0), (4,0), (5,0), (6,0) , (7,0), (0,1), (0,2), (0,3), (0,4), (1,4), (2,4), (3,4), (4,4), (5,4), (6,4),
         (7,1), (7,2), (7,3), (7,4)]
