@@ -25,6 +25,7 @@ class Agent:
             y1 = y - 1
         return (x,y1)
 
+    #Retorna a coordenada a sul
     def coord_south(self,coord):
         x,y = coord[0],coord[1]
         if y == self.maxCoord[1] - 1:
@@ -55,7 +56,6 @@ class Agent:
     
     #Faz a impressão das setas nas direções selecionadas
     def markArrow(self, direction, x, y):
-        print(self.obstacles)
         if direction == 0:
             if self.coord_north((x,y)) not in self.obstacles :
                 self.c.execute("marrow", "north" + "," + str(y) + "," + str(x))
@@ -71,6 +71,7 @@ class Agent:
         else:
             self.c.execute("marrow", "west" + "," + str(y) + "," + str(x))
 
+    #Retorna uma lista com obstáculos
     def getObstaclesList(self):
         positionObstacles = self.getObstacles()
         for i in range(len(positionObstacles)):
